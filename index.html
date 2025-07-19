@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RePencil - 100% Recycled Pencil Cores</title>
+    <meta name="description" content="Leading B2B manufacturer of sustainable pencil inner cores made from 100% recycled materials. Transform your pencil manufacturing with eco-friendly solutions." />
+    <style>
+      /* Custom CSS Properties for Theme Switching */
+      :root {
+        /* Light Mode Colors */
+        --color-primary: #228B22;
+        --color-primary-dark: #2E7D32;
+        --color-secondary: #8D6E63;
+        --color-secondary-dark: #5D4037;
+        --color-accent-sage: #9CAF88;
+        --color-accent-cream: #F5F5DC;
+        --color-accent-charcoal: #36454F;
+        --color-background: #FFFFFF;
+        --color-surface: #F9FAFB;
+        --color-text: #1F2937;
+        --color-text-secondary: #6B7280;
+      }
+
+      .dark {
+        /* Dark Mode Colors */
+        --color-primary: #4CAF50;
+        --color-primary-dark: #66BB6A;
+        --color-secondary: #A1887F;
+        --color-secondary-dark: #8D6E63;
+        --color-accent-sage: #7CB342;
+        --color-accent-cream: #2C2C2C;
+        --color-accent-charcoal: #B0BEC5;
+        --color-background: #111827;
+        --color-surface: #1F2937;
+        --color-text: #F9FAFB;
+        --color-text-secondary: #D1D5DB;
+      }
+
+      /* Grid Pattern Background */
+      .bg-grid-pattern {
+        background-image: 
+          linear-gradient(rgba(34, 139, 34, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(34, 139, 34, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      /* Smooth transitions for theme switching */
+      * {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--color-surface);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary-dark);
+      }
+
+      /* Loading animation */
+      .loading-pencil {
+        animation: drawLine 2s ease-in-out infinite;
+      }
+
+      @keyframes drawLine {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+      }
+
+      /* Confetti animation for celebrations */
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: #f0f;
+        animation: confetti-fall 3s linear infinite;
+        z-index: 9999;
+      }
+
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(-100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
