@@ -1,0 +1,52 @@
+{
+  "orders": [
+    {
+      "id": "ORD001",
+      "userId": "1",
+      "quantity": 250,
+      "basePrice": 7.50,
+      "discountPercentage": 5,
+      "subtotal": 1875,
+      "discountAmount": 93.75,
+      "total": 1781.25,
+      "status": "delivered",
+      "specifications": {
+        "diameter": "7mm",
+        "length": "175mm"
+      },
+      "createdAt": "2024-12-15T10:30:00Z"
+    },
+    {
+      "id": "ORD002",
+      "userId": "1",
+      "quantity": 500,
+      "basePrice": 7.50,
+      "discountPercentage": 10,
+      "subtotal": 3750,
+      "discountAmount": 375,
+      "total": 3375,
+      "status": "processing",
+      "specifications": {
+        "diameter": "6mm",
+        "length": "175mm"
+      },
+      "createdAt": "2024-12-20T14:15:00Z"
+    },
+    {
+      "id": "ORD003",
+      "userId": "3",
+      "quantity": 100,
+      "basePrice": 7.50,
+      "discountPercentage": 0,
+      "subtotal": 750,
+      "discountAmount": 0,
+      "total": 750,
+      "status": "pending",
+      "specifications": {
+        "diameter": "8mm",
+        "length": "190mm"
+      },
+      "createdAt": "2025-01-10T09:45:45:00Z"
+    }
+  ]
+}

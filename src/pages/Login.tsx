@@ -46,11 +46,7 @@ const Login: React.FC = () => {
     if (error) setError('');
   };
 
-  const demoCredentials = [
-    { email: 'manufacturer@test.com', password: 'password', role: 'Manufacturer' },
-    { email: 'admin@repencil.com', password: 'admin123', role: 'Admin' },
-    { email: 'demo@company.com', password: 'demo', role: 'Demo User' }
-  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-green-900/20 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -77,24 +73,7 @@ const Login: React.FC = () => {
           </p>
         </div>
 
-        {/* Demo Credentials */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4"
-        >
-          <h3 className="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-2">
-            Demo Credentials:
-          </h3>
-          <div className="space-y-2 text-sm">
-            {demoCredentials.map((cred, index) => (
-              <div key={index} className="text-blue-700 dark:text-blue-400">
-                <span className="font-medium">{cred.role}:</span> {cred.email} / {cred.password}
-              </div>
-            ))}
-          </div>
-        </motion.div>
+
 
         <motion.form
           initial={{ opacity: 0 }}

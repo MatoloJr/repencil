@@ -130,6 +130,7 @@ const Products: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => window.location.href = '/order'}
               className="px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold"
             >
               Order Now
@@ -367,6 +368,7 @@ const Products: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => window.location.href = '/order'}
                   className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
                     tier.popular
                       ? 'bg-green-600 text-white hover:bg-green-700'

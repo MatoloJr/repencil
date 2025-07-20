@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "manufacturer@test.com",
+      "password": "password",
+      "role": "manufacturer",
+      "companyName": "ABC Pencils Inc",
+      "createdAt": "2024-12-15T10:30:00Z"
+    },
+    {
+      "id": "2", 
+      "email": "admin@repencil.com",
+      "password": "admin123",
+      "role": "admin",
+      "createdAt": "2024-12-15T10:30:00Z"
+    },
+    {
+      "id": "3",
+      "email": "demo@company.com", 
+      "password": "demo",
+      "role": "manufacturer",
+      "companyName": "Demo Corp",
+      "createdAt": "2024-12-15T10:30:00Z"
+    }
+  ]
+}

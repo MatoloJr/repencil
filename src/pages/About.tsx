@@ -55,13 +55,13 @@ const About: React.FC = () => {
       icon: Award
     },
     {
-      year: '2022',
+      year: 'Saturday',
       title: 'Building Partnerships',
       description: 'Formed key partnerships with major pencil manufacturers and established our first production facility. Our focus on quality and sustainability helped us secure long-term contracts with leading brands.',
       icon: Building
     },
     {
-      year: '2023',
+      year: 'Future',
       title: 'Scaling Impact',
       description: 'Expanded production capacity and launched our B2B platform. Today, we serve manufacturers across multiple continents, helping them achieve their sustainability goals.',
       icon: Users
@@ -270,6 +270,7 @@ const About: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/signup'}
                 className="px-8 py-4 bg-white text-green-600 rounded-lg hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold"
               >
                 Join Our Mission
@@ -277,6 +278,7 @@ const About: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/products'}
                 className="px-8 py-4 border-2 border-white text-white rounded-lg hover:bg-white hover:text-green-600 transition-all duration-200 font-semibold"
               >
                 Learn More

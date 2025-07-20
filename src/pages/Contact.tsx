@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNotification } from '../contexts/NotificationContext';
+import { dataService } from '../utils/dataService';
 import { 
   Mail, 
   Phone, 
@@ -16,6 +18,7 @@ import {
 } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  const { addNotification } = useNotification();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -37,37 +40,57 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        fullName: '',
-        email: '',
-        company: '',
-        subject: 'general',
-        message: ''
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Store contact form data using dataService
+      await dataService.storeContactSubmission(formData);
+      
+      addNotification({
+        type: 'success',
+        title: 'Message Sent Successfully!',
+        message: 'Thank you for contacting us. We\'ll get back to you within 24 hours.',
+        duration: 5000
       });
-    }, 3000);
+      
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          fullName: '',
+          email: '',
+          company: '',
+          subject: 'general',
+          message: ''
+        });
+      }, 3000);
+    } catch (error) {
+      addNotification({
+        type: 'error',
+        title: 'Message Failed',
+        message: 'Failed to send message. Please try again.',
+        duration: 5000
+      });
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
     {
       icon: Mail,
       title: 'Email Address',
-      details: 'info@repencil.com',
+      details: 'rccaharenschristine11@gmail.com',
       description: 'Send us an email anytime',
       color: 'from-blue-500 to-blue-600'
     },
     {
       icon: Phone,
       title: 'Phone Number',
-      details: '+254 700 123 456',
+      details: '+254 790262851',
       description: 'Mon-Fri from 8am to 5pm',
       color: 'from-green-500 to-green-600'
     },

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -18,37 +19,39 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <Router>
-          <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-            <Header />
-            <main>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/sustainability" element={<Sustainability />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/order" element={<Order />} />
-                <Route 
-                  path="/dashboard" 
-                  element={
-                    <ProtectedRoute roles={['manufacturer', 'admin']}>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  } 
-                />
-                
-                <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
-                <Route path="/terms" element={<PlaceholderPage title="Terms of Service" />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </Router>
-      </AuthProvider>
+      <NotificationProvider>
+        <AuthProvider>
+          <Router>
+            <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+              <Header />
+              <main>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/sustainability" element={<Sustainability />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/order" element={<Order />} />
+                  <Route 
+                    path="/dashboard" 
+                    element={
+                      <ProtectedRoute roles={['manufacturer', 'admin']}>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  
+                  <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
+                  <Route path="/terms" element={<PlaceholderPage title="Terms of Service" />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </Router>
+        </AuthProvider>
+      </NotificationProvider>
     </ThemeProvider>
   );
 }

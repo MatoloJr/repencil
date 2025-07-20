@@ -14,6 +14,8 @@ import {
   Target
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNotification } from '../contexts/NotificationContext';
+import { dataService } from '../utils/dataService';
 
 interface PricingResult {
   subtotal: number;
@@ -26,6 +28,7 @@ interface PricingResult {
 
 const Order: React.FC = () => {
   const { user } = useAuth();
+  const { addNotification } = useNotification();
   const [quantity, setQuantity] = useState(100);
   const [specifications, setSpecifications] = useState({
     diameter: '7mm',
@@ -40,7 +43,7 @@ const Order: React.FC = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [achievementUnlocked, setAchievementUnlocked] = useState<string | null>(null);
 
-  const basePrice = 15; // KES per unit
+  const basePrice = 7.50; // KES per unit
   const minQuantity = 100;
   const incrementStep = 5;
 
@@ -129,15 +132,58 @@ const Order: React.FC = () => {
       return;
     }
     
-    // Process order (would typically save to backend)
-    const orderData = {
-      quantity,
-      specifications,
-      pricing
+    // Process order using data service
+    const processOrder = async () => {
+      try {
+        const orderData = {
+          userId: user.id,
+          quantity,
+          basePrice,
+          discountPercentage: pricing.discountPercentage,
+          subtotal: pricing.subtotal,
+          discountAmount: pricing.discountAmount,
+          total: pricing.total,
+          status: 'pending' as const,
+          specifications
+        };
+        
+        const newOrder = await dataService.createOrder(orderData);
+        if (newOrder) {
+          console.log('Order placed successfully:', newOrder);
+          
+          addNotification({
+            type: 'success',
+            title: 'Order Placed Successfully!',
+            message: `Your order (${newOrder.id}) has been placed successfully. Total: KES ${newOrder.total.toLocaleString()}`,
+            duration: 5000
+          });
+          
+          // Reset form or redirect
+          setQuantity(100);
+          setSpecifications({
+            diameter: '7mm',
+            length: '175mm'
+          });
+        } else {
+          addNotification({
+            type: 'error',
+            title: 'Order Failed',
+            message: 'Failed to place order. Please try again.',
+            duration: 5000
+          });
+        }
+      } catch (error) {
+        console.error('Error placing order:', error);
+        addNotification({
+          type: 'error',
+          title: 'Order Error',
+          message: 'An error occurred while placing your order. Please try again.',
+          duration: 5000
+        });
+      }
     };
     
-    console.log('Order placed:', orderData);
-    // Show success message or redirect
+    processOrder();
   };
 
   if (!user) {

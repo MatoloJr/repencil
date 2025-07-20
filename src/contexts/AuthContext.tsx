@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { dataService, User as DataUser } from '../utils/dataService';
+import { useNotification } from './NotificationContext';
 
-export interface User {
-  id: string;
-  email: string;
-  role: 'guest' | 'manufacturer' | 'admin';
-  companyName?: string;
-  createdAt: string;
+export interface User extends Omit<DataUser, 'password'> {
+  // Extends DataUser but excludes password for security
 }
 
 interface AuthContextType {
@@ -29,6 +27,7 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { addNotification } = useNotification();
 
   useEffect(() => {
     // Check for existing session
@@ -43,27 +42,43 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setIsLoading(true);
       
-      // Simulate API call with mock users
-      const mockUsers = [
-        { id: '1', email: 'manufacturer@test.com', password: 'password', role: 'manufacturer' as const, companyName: 'ABC Pencils Inc' },
-        { id: '2', email: 'admin@repencil.com', password: 'admin123', role: 'admin' as const },
-        { id: '3', email: 'demo@company.com', password: 'demo', role: 'manufacturer' as const, companyName: 'Demo Corp' }
-      ];
+      // Authenticate user using data service
+      const authenticatedUser = await dataService.authenticateUser(email, password);
       
-      const foundUser = mockUsers.find(u => u.email === email && u.password === password);
-      
-      if (foundUser) {
-        const userData: User = {
-          ...foundUser,
-          createdAt: new Date().toISOString()
-        };
+      if (authenticatedUser) {
+        // Remove password from user object for security
+        const { password: _, ...userData } = authenticatedUser;
         setUser(userData);
         localStorage.setItem('repencil_user', JSON.stringify(userData));
+        
+        addNotification({
+          type: 'success',
+          title: 'Login Successful',
+          message: `Welcome back, ${userData.companyName || userData.email}!`,
+          duration: 3000
+        });
+        
         return true;
       }
+      
+      addNotification({
+        type: 'error',
+        title: 'Login Failed',
+        message: 'Invalid email or password. Please try again.',
+        duration: 5000
+      });
+      
       return false;
     } catch (error) {
       console.error('Login error:', error);
+      
+      addNotification({
+        type: 'error',
+        title: 'Login Error',
+        message: 'An error occurred during login. Please try again.',
+        duration: 5000
+      });
+      
       return false;
     } finally {
       setIsLoading(false);
@@ -74,20 +89,48 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setIsLoading(true);
       
-      // Simulate API call
-      const userData: User = {
-        id: Date.now().toString(),
+      // Create user using data service
+      const newUser = await dataService.createUser({
         email,
+        password,
         role,
-        companyName,
-        createdAt: new Date().toISOString()
-      };
+        companyName
+      });
       
-      setUser(userData);
-      localStorage.setItem('repencil_user', JSON.stringify(userData));
-      return true;
+      if (newUser) {
+        // Remove password from user object for security
+        const { password: _, ...userData } = newUser;
+        setUser(userData);
+        localStorage.setItem('repencil_user', JSON.stringify(userData));
+        
+        addNotification({
+          type: 'success',
+          title: 'Account Created',
+          message: `Welcome to RePencil, ${userData.companyName || userData.email}! Your account has been created successfully.`,
+          duration: 5000
+        });
+        
+        return true;
+      }
+      
+      addNotification({
+        type: 'error',
+        title: 'Signup Failed',
+        message: 'Failed to create account. Please try again.',
+        duration: 5000
+      });
+      
+      return false;
     } catch (error) {
       console.error('Signup error:', error);
+      
+      addNotification({
+        type: 'error',
+        title: 'Signup Error',
+        message: error instanceof Error ? error.message : 'An error occurred during signup. Please try again.',
+        duration: 5000
+      });
+      
       return false;
     } finally {
       setIsLoading(false);
@@ -95,8 +138,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = () => {
+    const currentUser = user;
     setUser(null);
     localStorage.removeItem('repencil_user');
+    
+    addNotification({
+      type: 'info',
+      title: 'Logged Out',
+      message: `Goodbye, ${currentUser?.companyName || currentUser?.email}! You have been logged out successfully.`,
+      duration: 3000
+    });
   };
 
   return (

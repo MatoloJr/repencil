@@ -1,0 +1,27 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Standard Recycled Pencil Core",
+      "basePriceKES": 7.50,
+      "minOrderQuantity": 100,
+      "incrementStep": 3,
+      "specifications": {
+        "diameter": ["6mm", "7mm", "8mm"],
+        "length": ["175mm", "190mm"],
+        "hardness": ["HB", "2H", "2B"]
+      },
+      "materials": {
+        "recycledPaper": 60,
+        "recycledGraphite": 30,
+        "naturalClay": 10
+      },
+      "features": [
+        "100% recycled materials",
+        "Superior durability",
+        "Consistent performance",
+        "Eco-friendly production"
+      ]
+    }
+  ]
+}
