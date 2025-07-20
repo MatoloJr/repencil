@@ -83,7 +83,7 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email Address',
-      details: 'rccaharenschristine11@gmail.com',
+      details: 'info@repencil.com',
       description: 'Send us an email anytime',
       color: 'from-blue-500 to-blue-600'
     },

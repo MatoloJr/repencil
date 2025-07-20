@@ -43,7 +43,7 @@ const Order: React.FC = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [achievementUnlocked, setAchievementUnlocked] = useState<string | null>(null);
 
-  const basePrice = 7.50; // KES per unit
+  const basePrice = 2.0; // KES per unit
   const minQuantity = 100;
   const incrementStep = 5;
 
@@ -57,7 +57,7 @@ const Order: React.FC = () => {
     
     if (qty >= 200) {
       const extraHundreds = Math.floor((qty - 100) / 100);
-      discountPercentage = Math.min(extraHundreds * 5, 50); // Max 50% discount
+      discountPercentage = Math.min(extraHundreds * 0.5, 15); // Max 15% discount
     }
     
     const discountAmount = (subtotal * discountPercentage) / 100;
@@ -100,7 +100,7 @@ const Order: React.FC = () => {
     
     if (clampedQuantity >= 200) {
       const extraHundreds = Math.floor((clampedQuantity - 100) / 100);
-      newDiscountPercentage = Math.min(extraHundreds * 5, 50);
+      newDiscountPercentage = Math.min(extraHundreds * 0.5, 15);
     }
     
     // Trigger celebration if discount increased
